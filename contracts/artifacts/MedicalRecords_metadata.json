@@ -1,0 +1,140 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "patientId",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "appointmentDate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "doctorNotes",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "diagnosis",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "prescriptions",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "followUpPlan",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "doctorId",
+						"type": "string"
+					}
+				],
+				"name": "addRecord",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "patientId",
+						"type": "string"
+					}
+				],
+				"name": "getRecords",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "appointmentDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "doctorNotes",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "diagnosis",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "prescriptions",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "followUpPlan",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "doctorId",
+								"type": "string"
+							}
+						],
+						"internalType": "struct MedicalRecords.Record[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/MedicalRecords.sol": "MedicalRecords"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/MedicalRecords.sol": {
+			"keccak256": "0x7f16bc34e248d2fd02e5a8df8e2079e1a12d16c1454f2ba4064bec9cdfe71b56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f226f5762bcffa1bf4791068a195cb243cf33101bfee977e70fb549d71678dfc",
+				"dweb:/ipfs/QmUaidCgdongxhxNgRqvACr17Ns2ZJCBrVW26hJEkTy9Ex"
+			]
+		}
+	},
+	"version": 1
+}
