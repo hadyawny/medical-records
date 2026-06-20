@@ -1,28 +1,70 @@
-REMIX DEFAULT WORKSPACE
+# Medical Records — On-Chain Smart Contract
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+A Solidity smart contract for storing and retrieving patient medical records on the Ethereum blockchain. Each patient's history is kept as an append-only list of structured records, making entries tamper-evident and verifiable on-chain.
 
-This workspace contains 3 directories:
+This is a proof-of-concept exploring how electronic health records can be represented and managed with smart contracts.
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+## What it does
 
-SCRIPTS
+- Stores medical records on-chain, keyed by patient ID
+- Lets a record be added for a patient (appointment date, doctor notes, diagnosis, prescriptions, follow-up plan, doctor ID)
+- Returns the full history of records for a given patient
+- Keeps records as an append-only array per patient, so history is preserved
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
+## Tech stack
 
-For the deployment of any other contract, just update the contract's name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
+- **Solidity** `^0.8.0` — smart contract
+- **ethers.js** & **web3.js** — deployment scripts (TypeScript)
+- **Remix IDE** — compilation and deployment environment
 
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
+## Contract overview
 
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
+`MedicalRecords.sol` exposes a `Record` struct and two functions:
 
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+```solidity
+struct Record {
+    uint256 appointmentDate;
+    string  doctorNotes;
+    string  diagnosis;
+    string  prescriptions;
+    string  followUpPlan;
+    string  doctorId;
+}
+```
+
+| Function | Type | Description |
+| --- | --- | --- |
+| `addRecord(patientId, appointmentDate, doctorNotes, diagnosis, prescriptions, followUpPlan, doctorId)` | write | Appends a new record to a patient's history |
+| `getRecords(patientId)` | view | Returns the array of all records for a patient |
+
+Records are stored in a private mapping `string => Record[]`, where the key is the patient ID.
+
+## Project structure
+
+```
+contracts/
+  MedicalRecords.sol      # the smart contract
+scripts/
+  deploy_with_ethers.ts   # deploy via ethers.js
+  deploy_with_web3.ts     # deploy via web3.js
+  ethers-lib.ts           # ethers helper
+  web3-lib.ts             # web3 helper
+```
+
+## Running it
+
+The contract can be compiled and deployed from [Remix IDE](https://remix.ethereum.org/):
+
+1. Open the project in Remix.
+2. Compile `contracts/MedicalRecords.sol`.
+3. Deploy using the injected provider (e.g. MetaMask) or a Remix VM, or run one of the deploy scripts in `/scripts`.
+4. Call `addRecord(...)` to store a record and `getRecords(patientId)` to read a patient's history.
+
+## Possible improvements
+
+This is an early version. Natural next steps for a real-world system:
+
+- **Access control** — restrict who can add or read records (e.g. role-based access for doctors/patients), since the current version is open by design for demonstration.
+- **Events** — emit an event on each new record for easier off-chain indexing.
+- **Off-chain storage** — store large notes off-chain (e.g. IPFS) and keep only hashes on-chain to reduce gas costs and protect sensitive data.
+- **Patient consent & ownership** — tie records to patient-owned addresses.
